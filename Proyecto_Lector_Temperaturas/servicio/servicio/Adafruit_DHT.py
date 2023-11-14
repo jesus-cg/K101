@@ -13,7 +13,7 @@ dbusername = "root"
 dbpass = "1234"
 
 print("cargando configuración")
-f = open("config","r")
+f = open("config","r") #requiere escribir toda la dirección del archivo
 
 for i in f:
     val = i.split("=")
@@ -44,9 +44,9 @@ cur = db.cursor()
 print("Iniciando")
 while True:
     print("Leyendo información.")
-    #humedad, temperatura = Adafruit_DHT.read_retry(sensor, pin)
-    humedad = random.uniform(20.0,50.0)
-    temperatura = random.uniform(20.0,80.0)
+    humedad, temperatura = Adafruit_DHT.read_retry(sensor, pin)
+    #humedad = random.uniform(20.0,50.0)
+    #temperatura = random.uniform(20.0,80.0)
     if humedad is not None and temperatura is not None:
         sql = "INSERT INTO temperaturas VALUES (%4.2f, %4.2f);" % (datetime.datetime.now().strftime("%Y-%m-%d %H:$M:%S"), temperatura)
         print(sql)

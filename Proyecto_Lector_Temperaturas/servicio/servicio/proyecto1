@@ -1,0 +1,9 @@
+SELECT *
+from temperaturas
+ORDER BY fecha desc limit 20;
+
+INSERT INTO temperaturas
+VALUES ("2023-11-10 18:11", 20,35);
+
+DELETE FROM temperaturas
+WHERE fecha = "2023-11*10 18:11"
