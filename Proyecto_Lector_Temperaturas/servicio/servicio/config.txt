@@ -1,2 +1,2 @@
-pin = 17
-intervalo = 300
+pin=17
+intervalo=300
