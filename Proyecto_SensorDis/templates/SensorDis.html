@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visaulización de RaspberryPi</title>
+    <style type="text/css">
+        .auto-style1{
+            border: 1px solid #808080;
+        }
+        .auto-style2{
+            border: 1px solid #808080;
+        }
+    </style>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   
+<body>
+<center>
+    <br>
+    <strong>Visualización de Distancia</strong>
+<br>
+<br>
+<br>
+    <table style="width: 100%">
+        <tr>
+            <td width="50%">
+                <table cellsapacing="1" class="auto-style1" style="width: 100%;">
+                {% for i in result%}
+                    <tr>
+                        <td class="auto-style2" style="width: 50%">Distancia: {{ i[0] }}</td>
+                        <td class="auto-style2" style="width: 50%">Fecha {{ i[1] }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </td>
+
+            <td width="50%">
+                <div>
+                    <canvas id="myChart"></canvas>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+    
+    <br>
+</center>
+
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [{% for i in result%}
+                '{{ i[0] }}',
+                {% endfor %}],
+      datasets: [{
+        label: '# of Votes',
+        data: [{% for i in result%}
+                    {{ i[1] }},
+                    {% endfor %}],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
