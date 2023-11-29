@@ -1,50 +1,62 @@
 Si quiere visualizar el documento en tiempo real aquí está el link de acceso: https://docs.google.com/document/d/1Arq1fVoOo8eHmzCvm03qGgmUEvjwfhFb1OHRTgmVR30/edit?usp=sharing
 
 Transcripción:
-Nombres:
+Integrantes:
 Jesús Eduardo Campos Garibay
 Axl Gil Islas
-Amauri Valenzuela Garzon
-Isaías Hernández Astorga
+Amauri Valenzuela Garzon	
+Isaías Hernández Astorga						
+
 Propuesta:
 Generar un sistema de IoT con sensores capaces de detectar el flujo del agua en las colonias para apoyar a los ciudadanos a tomar mejores decisiones que ayuden a su calidad de vida de acuerdo al registro del flujo en su vivienda. Aparte, la recopilación de datos permitiría que los servicios que proveen de agua reconozcan con rapidez dónde se origina el problema de la escasez del recurso.
 
-Investigación:
-Antecedentes
-En 2019, se tiene registro de que Agua y Drenaje de Monterrey, donde “podrás consultar saldos, facturas, realizar reportes, y consultar centros de pago”
-https://www.facebook.com/gobiernonuevoleon/videos/nueva-app-de-agua-y-drenaje-de-monterrey/455388261852737/?locale=es_LA 
-Datos de cómo funciona el sistema de distribución de agua por parte de Agua y Drenaje de Monterrey:
-La ciudad cuenta con dos sistemas principales de distribución de agua: El sistema Gravity, que abastece a la zona centro y sur, y el sistema Vista Hermosa, que abastece a la zona norte y oeste.
-El agua proveniente de las presas y pozos es tratada en las plantas potabilizadoras y luego bombeada a tanques de almacenamiento elevados, ubicados en puntos estratégicos de la ciudad.
-De estos tanques, el agua se distribuye por gravedad a través de tuberías primarias de gran diámetro hacia sectores y colonias específicas.
-Dentro de cada sector hay una red secundaria de tuberías que llevan el agua hasta los hogares y comercios. Esta red opera con presiones de 2 a 6 kg/cm2 aproximadamente.
-El suministro de agua está sectorizado, lo que quiere decir que la ciudad se divide en zonas de distribución independientes entre sí. Esto permite controlar mejor la presión y el caudal suministrado.
-“Para su aplicación se tomó como base un padrón de 700 mil conexiones domiciliarias y se dividió la red de agua potable en sectores, aislados entre sí por el cierre de válvulas con una sola alimentación donde se instaló un macro medidor con el cual se compara el consumo de la zona contra el obtenido después de cerrar las llaves domiciliarias” (https://web.sadm.gob.mx/SADM/index.jsp?id_html=operaciones).
-Cada sector cuenta con válvulas, medidores de flujo, tanques reguladores y estaciones de bombeo propias para optimizar la operación dentro de ese sector específico.
-Asimismo, el SADM cuenta con varias herramientas y sistemas para detectar y medir fugas o bajas de flujo en la red de distribución de agua potable en la zona metropolitana:
-Macromedición: Se utilizan medidores de caudal electromagnéticos instalados en las entradas y salidas de cada sector de distribución. Esto permite medir los flujos entrantes y salientes para detectar diferencias que indiquen posibles fugas.
-Telemetría: Los tanques de almacenamiento están equipados con sensores de nivel que transmiten la información en tiempo real a un centro de control. Esto permite detectar variaciones anómalas de nivel que pueden deberse a fugas.
-Caudalímetros: Se instalan caudalímetros en puntos estratégicos de la red de distribución para medir y monitorear de manera remota los caudales. Una disminución repentina puede indicar una fuga.
-Modelación hidráulica: Se utilizan programas informáticos de modelación de flujos que, con los datos de presiones y caudales, pueden detectar inconsistencias indicativas de fugas.
-Equipos de correlación acústica: Técnicos recorren las redes con geófonos para escuchar el ruido del agua y detectar puntos de fuga.
-Registros de presión: Sensores de presión instalados en la red permiten monitorear caídas de presión asociadas a fugas.
-Sistemas de información geográfica: Permiten mapear y analizar los datos de fugas detectadas para identificar patrones y priorizar acciones.
-Mantenimiento preventivo de redes: El reemplazo y rehabilitación periódica de tuberías averiadas disminuye las fugas.
+Enfoque
+
+Público general: Cualquier ciudadano con un servicio de agua.
+Público afectado: Las colonias y hogares cuyos servicios de agua ya han sido y serán afectados.
+Público objetivo: Ciudadanos que quieren utilizar sus recursos hídricos de forma inteligente y/o autónoma.
+
+¿Qué se quiere detectar?
+Datos del flujo de agua en la tubería principal de cada colonia y en cada hogar.
+Historial del flujo de agua en el hogar.
+¿Para qué?
+Presentar la información para prever cualquier situación que puede desfavorecer el bienestar de los usuarios.
+Registrar el flujo de agua que el usuario quiera en un determinado lapso de tiempo.
+
+¿Qué se quiere detectar?
+Como idea a futuro, serviría para avisar con mayor inmediatez a los servicios de agua sobre la falta de este recurso en el área.
+Flujo de agua nulo, mínimo aceptable o continuo.
+
+¿Para qué?
+Proporcionar distintos modos de uso del agua del hogar (servicio). Por ejemplo, usar el agua que se tiene en un tinaco o rellenar, con el flujo disponible, cuerpos designados.
 
 
-Dado nuestro proyecto, realmente la instalación de un sensor por cada hogar para usar correctamente el IoT no parece la forma más óptima y/o económica para detectar flujos bajos.
-El mantenimiento y ampliación de redes lo realiza SADM. Constantemente se reemplazan tuberías antiguas y se amplía la infraestructura hacia nuevas zonas urbanizadas.
-Parte de la SADM podría reconfigurarse para la instalación de nuestro proyecto en sectores ya existentes.
-El sistema de distribución opera las 24 horas del día todos los días del año para satisfacer la demanda de agua de los regiomontanos.
+Objetivos y delegación de actividades
+Dada la utilidad que le queremos dar a nuestro proyecto, hay que programar la Raspberry Pi para:
+Registrar el flujo de agua de mínimo dos espacios y diferenciarlos.
+Amauri e Isaías.
+Crear un registro en un lapso de tiempo especificado por el usuario.
+Amauri, Isaías y Axl
+Cambiar la fuente de agua en el hogar.
+Amauri y Chuy.
+Por parte nuestra, debemos:
+Crear una interfaz simple, pero útil.
+Axl y Chuy.
+Diseñar una presentación para el proyecto.
+Axl, Isaías y Chuy.
+Verificar que el trabajo que se hace va en la dirección correcta.
 
-Otros sistemas por describir:
-El anillo de transferencia es una macro-tubería de 150 km de longitud que conecta las presas del sistema Gravity (La Boca y Cerro Prieto) con el sistema Vista Hermosa que abastece al norte y oeste de la ciudad. Este anillo permite transferir agua entre ambos sistemas para compensar déficits cuando alguno de ellos tiene problemas de abastecimiento. Fue construído entre 2006 y 2012.
-Otra obra importante es el acueducto La Boca-Anzaldúas que trae agua de la presa La Boca hasta una nueva potabilizadora en Guadalupe. Incrementa la distribución en el área metropolitana.
-El proyecto Monterrey VI construyó una presa de almacenamiento con capacidad de 250 millones de m3. Regulará el flujo del Río San Juan antes de su llegada a la planta potabilizadora Cerro Prieto.
-El acueducto El Cuchillo-San Juan traslada agua del municipio China, NL hacia la zona metropolitana de Monterrey para reforzar el suministro. Tiene una longitud de 105 km.
-Con el Plan Director de Agua y Drenaje se implementan obras para rehabilitar redes obsoletas, construir tanques, mejorar estaciones de bombeo e instalar nuevos medidores y válvulas de control.
-Se construyó la presa Libertad en Cadereyta, NL como parte del Programa de Agua del Futuro para incrementar las reservas de agua cruda de Monterrey.
-Estos y otros proyectos buscan incrementar la cobertura, confiabilidad y eficiencia en la distribución de agua potable en toda la zona metropolitana.
+Información para programar y antecedentes de otros trabajos
+Hoja de datos del sensor de flujo agua (caudalímetro): https://c1555f5ec9.clvaw-cdnwnd.com/34662fcf1f1e607c561442431023ac8e/200002308-e8623e95f4/Water-Flow-Sensor-YF-S201.pdf 
+La creación de otro programador (BrucesHobbies)para llevar un recuento del flujo gracias al sensor de flujo de agua (distinto al nuestro) en Python que se puede utilizar en la Raspberry Pi (nos basaremos en este): https://github.com/BrucesHobbies/flowMaster.git 
+Este también es la creación de otro programador (AlgoSolu), pero su sensor es el mismo que el nuestro: https://github.com/AlgoSolu/DS18B20_YF-S201_RaspberryPi.git 
+Tutorial del sensor de flujo de agua en ARDUINO: https://naylampmechatronics.com/blog/47_tutorial-sensor-de-flujo-de-agua.html 
+Como tal, no se encontró una hoja de datos de la bomba de agua, pero esta información de venta nos funciona: https://mvelectronica.com/producto/mini-bomba-de-agua-sumergible-de-3-6v-blanca-120l-h 
+La creación de otro programador (babeeshka) para llevar controlar el flujo de agua con la bomba de agua con la Raspberry Pi: https://github.com/babeeshka/hydro_monitor.git 
+Alguien ya trabajó en la creación de una app que registra la información como nosotros queremos: https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwjZnarWvemCAxUwOUQIHbI_DSY4ChAWegQIBRAB&url=https%3A%2F%2Frepository.uaeh.edu.mx%2Frevistas%2Findex.php%2Fxikua%2Farticle%2Fdownload%2F8049%2F8629%2F&usg=AOvVaw0UjbFjPPoLk9uyOoc0Z0_x&opi=89978449 
 
-
-Evaluación de una estudiante del TEC sobre las fuentes de abastecimiento de agua en la ZMM (2012): https://repositorio.tec.mx/handle/11285/571550 
+Materiales a conseguir:
+Mangueras (mejor si es de plástico porque las puntas se pueden adherir calentándolas con una secadora).
+Home Depot se ve como la mejor opción. También tiene mangueras con cuello
+Recipientes (a poder ser, de plástico para que no haya ningún problema de filtración de agua).
+Cualquier sucursal o supermercado cuenta con elementos así.
