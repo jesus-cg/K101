@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+#Those lines that use functions from pub must be changed to instructions to use in our DB
 """
 Copyright(C) 2021, BrucesHobbies
 All Rights Reserved
@@ -36,14 +36,9 @@ LICENSE:
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-Tested with:
-Digiten Water Flow Sensor Model: FL-S402B
-Working range: 0.3 - 10L/min
-Water pressure <0.8Mps
-F = 23 * Q (L/minute)
-
-SIGNAL goes to a voltage divider of 2/3 (5kOhm and 10kOhm) to convert 5 V output to 3.3 V
-RPi inputs cannot be exposed to voltages less than 0 or greater than 3.3 volts.
+Sensor de Flujo de Agua: YF-S201
+Working range: 1 - 30L/min
+Working Voltage: 5 - 24 DC #Use a relay to use and receive from it
 
 RPI			          Flow sensor
 ----------------          -------
@@ -58,12 +53,11 @@ import time
 import datetime
 import RPi.GPIO as GPIO
 
-import pubScribe
+#import pubScribe
 
 # FLOWSIGNAL = 18    # BCM GPIO18 RPi3/4 pin 12
 # FLOWSIGNAL = 23    # BCM GPIO23 RPi3/4 pin 16
-FLOWSIGNAL = 24    # BCM GPIO24 RPi3/4 pin 18
-
+FLOWSIGNAL = 8       # También puede ser el pin 10 o 33
 
 tInterval = 1    # Display / logging interval in seconds
 
@@ -118,7 +112,6 @@ def flowRate() :
             result = round(1.0/avgFlowRate/23.0, 3)    # L/minute
 
     lastPulses = pulses
-
     return result
 
 
@@ -135,7 +128,7 @@ if __name__ == '__main__':
 
     print('\nProgram started ', datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S '))
     print('Press CTRL+C to exit...\n')
-    pubScribe.connectPubScribe()
+    #pubScribe.connectPubScribe()
     sensorInit()
 
     try :
@@ -155,7 +148,7 @@ if __name__ == '__main__':
                 print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S '), 'Liters= ', q, ' AvgFlowRate (L/minute)= ', f)
                 topic = 'flowSensor'
                 dictVar = {'Qty (L)': q, 'FlowRate (L/minute)': f}
-                pubScribe.pubRecord(pubScribe.CSV_FILE, topic, dictVar)
+                #pubScribe.pubRecord(pubScribe.CSV_FILE, topic, dictVar)
                 last_q = q
                 last_f = f
 
@@ -165,4 +158,4 @@ if __name__ == '__main__':
         print(' Keyboard interrupt caught, exiting.')
 
     sensorClose()
-    pubScribe.disconnectPubScribe()
+    #pubScribe.disconnectPubScribe()

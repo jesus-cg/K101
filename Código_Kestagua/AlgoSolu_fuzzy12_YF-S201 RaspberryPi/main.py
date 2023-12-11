@@ -16,11 +16,11 @@ INFLUX_ENABLE = 'yes'
 
 # argument pin is required
 import argparse
-parser = argparse.ArgumentParser(description='YF-S201 measurement application for Raspberry Pi')
+parser = argparse.ArgumentParser(description='Aplicación para hacer mediciones con el sensor YF-S201 en la Raspberry Pi')
 requiredNamed = parser.add_argument_group('required named arguments')
 requiredNamed.add_argument('-p', '--pin', help='Data Raspberry Pin. Look at GPIO PINOUT', required=True)
 args = parser.parse_args()
-print("Port:",args.pin)
+print("Pin:",args.pin)
 
 if not args.pin:
     parser.parse_args(['-h'])
@@ -31,8 +31,8 @@ except ValueError:
     print('Error pin must be a integer')
     sys.exit() 
 
-if args.pin != '8' and args.pin != '10':
-    print("Error pin must be 8 or 10. If you need another pin change this condition...")
+if args.pin != '8' and args.pin != '10' and args.pin != 33:
+    print("Error pin must be 8, 10 or 33. If you need another pin change this condition...")
     sys.exit()
 
 # configurations
@@ -49,7 +49,7 @@ sample_rate = 10  # Sampling each 10 secondes
 time_start = 0
 time_end = 0
 period = 0;
-hz = []       # Frequency !important!
+hz = [16]  #For 120L/H     # Frequency !important!
 m = 0.0021    # See linear.pdf
 
 # data 
@@ -57,7 +57,7 @@ db_good_sample = 0
 db_hz = 0
 db_liter_by_min = 0
 
-print("Water Flow - YF-S201 measurment")
+print("Flujo de agua - YF-S201 medición")
 
 while True:
     # start / end 

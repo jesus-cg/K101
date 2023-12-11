@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+#This code must be put aside by the moment...
 """
 Copyright(C) 2021, BrucesHobbies
 All Rights Reserved
@@ -61,6 +61,7 @@ import sys
 import time
 import datetime
 
+"""
 
 #
 # USER CONFIGURATION SECTION
@@ -93,7 +94,6 @@ buzzerPIN = 18                         # Customize based on your wiring
 
 # --- END USER CONFIGURATION ---
 
-
 if MQTT_ENABLED :
     import paho.mqtt.client as mqtt
     mqttClient = mqtt.Client()
@@ -102,12 +102,11 @@ if EMAIL_SMS_ENABLED :
     import sendEmail
 
 if INFLUX_DB_ENABLED :
-    from influxdb import InfluxDBClient
+    from influxdb import InfluxDBClient #Cambiar a Mariadb
 
 if BUZZER_ENABLED :
     import RPi.GPIO as GPIO
     from threading import Timer
-
 
 def connectPubScribe() :
     global mqttClient
@@ -116,8 +115,8 @@ def connectPubScribe() :
     if MQTT_ENABLED :
         mqttClient.connect(MQTT_HOST, MQTT_PORT, MQTT_KEEPALIVE_INTERVAL)
 
-    if EMAIL_SMS_ENABLED :
-        sendEmail.loadJsonFile()
+    #if EMAIL_SMS_ENABLED :
+    #    sendEmail.loadJsonFile()
         # sendStatus("pubScribe.py", " Program start")
 
     if INFLUX_DB_ENABLED :
@@ -148,10 +147,11 @@ def attachFunction() :
 # Destinations
 MQTT = 'MQTT'
 CSV_FILE = 'CSV_FILE'
-EMAIL_SMS = 'EMAIL_SMS'
+#EMAIL_SMS = 'EMAIL_SMS'
 INFLUX_DB = 'INFLUX_DB'
 BUZZER = 'BUZZER'
 
+"""
 
 #
 # Publish data record
@@ -172,19 +172,19 @@ def pubRecord(dest, topic, data, hdr="") :
     if CSV_FILE_ENABLED and (CSV_FILE in dest) :
         writeCsv(topic, data, hdr)
 
-    if EMAIL_SMS_ENABLED and (EMAIL_SMS in dest) :
-        if not isinstance(data, str) :
-            msg = str(data)
+    #if EMAIL_SMS_ENABLED and (EMAIL_SMS in dest) :
+    #    if not isinstance(data, str) :
+    #        msg = str(data)
         # if not isinstance(data,str) :
         #     msg = json.dumps(data, indent=4)
-        else :
-            msg = data
+    #    else :
+    #        msg = data
 
-        upperTopic = topic.upper()
-        if 'ALERT' in upperTopic :
-            sendAlert(topic, msg)
-        elif 'STATUS' in upperTopic :
-            sendStatus(topic, msg)
+    #    upperTopic = topic.upper()
+    #    if 'ALERT' in upperTopic :
+    #        sendAlert(topic, msg)
+    #    elif 'STATUS' in upperTopic :
+    #        sendStatus(topic, msg)
 
     if INFLUX_DB_ENABLED and (INFLUX_DB in dest) :
         if not isinstance(data,str) :
@@ -278,7 +278,7 @@ def writeCsv(topic, data, hdr="") :
 #
 # Send alert via email to another email or as SMS text
 #
-def sendAlert(subj, msg) :
+""" def sendAlert(subj, msg) :
     msg = time.strftime("%a, %d %b %Y %H:%M:%S \n", time.localtime()) + msg
     sendEmail.send_mail(sendEmail.ALERT_USERID, subj, msg)
 
@@ -291,6 +291,7 @@ def sendStatus(subj, msg) :
     sendEmail.send_mail(sendEmail.STATUS_USERID, subj, msg)
 
 
+"""
 #
 # Buzzer On
 #
