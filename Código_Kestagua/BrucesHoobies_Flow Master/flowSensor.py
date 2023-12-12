@@ -44,7 +44,7 @@ RPI			          Flow sensor
 ----------------          -------
 Pin  2 (5Vdc)             Vcc (Red)
 Pin  6 (GND)	          GND (Black)
-Pin 16 (GPIO23)           SIGNAL (0 - 3.3 Vdc) from voltage divider from yellow wire
+Pin 8 (GPIO14)           SIGNAL (0 - 3.3 Vdc) from voltage divider from yellow wire
 
 """
 
