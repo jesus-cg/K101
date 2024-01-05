@@ -1,15 +1,26 @@
-
-DEBUG = False
 import time, sys
 import RPi.GPIO as GPIO
 from datetime import datetime
 import pymysql
 
+DEBUG = False
 dbserver = "189.158.70.54"
 dbnamer = "Kestagua"
 dbusername = "root"
 dbpass = "1234"
 INFLUX_ENABLE = 'yes'
+sample_rate = 10 
+m = 0.0021 
+
+try:
+    db_connection=pymysql.connect(host=dbserver,user=dbusername,passwd=dbpass,db=dbnamer)
+    print("Conexion con base de datos")
+except pymysql.MySQLError as e:             #se agrego la conexion a base de datos
+    print(f"Error al conectar: {e}")
+    sys.exit(1) 
+
+
+
 
 pin_input = 8
 GPIO.setmode(GPIO.BOARD)
@@ -17,12 +28,10 @@ GPIO.setup(pin_input, GPIO.IN)
 
 total_liters = 0
 secondes = 0
-sample_rate = 10  
 time_start = 0
 time_end = 0
 period = 0;
 hz = []      
-m = 0.0021    
 db_good_sample = 0
 db_hz = 0
 db_liter_by_min = 0
@@ -58,6 +67,16 @@ while True:
 
         print('-------------------------------------')
         print('Current Time:',time.asctime(time.localtime()))
+        
+        
+        try:
+            with db_connection.cursor() as cursor:
+                sql = "INSERT INTO tu_tabla (serial, type, time, good_sample, hz, liter_by_min) VALUES (%s,%s,%s,%s,%s,%s)"
+                cursor.execute(sql,("WF-"+str(pin_input),"Water Flow",current_time, float(db_good_sample),db_hz,db_liter_by_min))
+            db_connection.commit()
+        except pymysql.MySQLError as e:
+            print(f"Error al enviar a la base de datos: {e}")
+                
 
         secondes += sample_rate
         nb_samples = len(hz);
@@ -98,8 +117,10 @@ while True:
   
     except KeyboardInterrupt:
         print('\n CTRL+C - Exiting')
+        db_connection.close()
         GPIO.cleanup()
         sys.exit()
 GPIO.cleanup()
+db.connection.close()
 print('Done')
 
