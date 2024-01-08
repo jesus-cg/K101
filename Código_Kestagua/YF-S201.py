@@ -27,7 +27,7 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setup(pin_input, GPIO.IN)
 
 total_liters = 0
-secondes = 0
+seconds = 0
 time_start = 0
 time_end = 0
 period = 0;
@@ -68,6 +68,7 @@ while True:
         print('-------------------------------------')
         print('Current Time:',time.asctime(time.localtime()))
         
+        current_time = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
         
         try:
             with db_connection.cursor() as cursor:
@@ -78,7 +79,7 @@ while True:
             print(f"Error al enviar a la base de datos: {e}")
                 
 
-        secondes += sample_rate
+        seconds += sample_rate
         nb_samples = len(hz);
         if nb_samples >0:
             average = sum(hz) / float(len(hz));
@@ -97,10 +98,10 @@ while True:
         print("\t", db_hz,'(hz) average')
         print('\t', db_liter_by_min,'(L/min)') 
         print(round(total_liters,4),'(L) total')
-        print(round(secondes/60,4), '(min) total')
+        print(round(seconds/60,4), '(min) total')
         print('-------------------------------------')
 
-        current_time = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+        
         json_body = [{
         "measurement": "temperature",
         "tags": {
@@ -120,7 +121,8 @@ while True:
         db_connection.close()
         GPIO.cleanup()
         sys.exit()
+        
 GPIO.cleanup()
-db.connection.close()
+db_connection.close()
 print('Done')
 
