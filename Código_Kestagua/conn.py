@@ -5,8 +5,8 @@ conn = mariadb.connect(
          host='127.0.0.1', #RPi IP
          port= 3306,
          user='root',
-         password='goldSTAR',
-         database='movieDb')
+         password='root',
+         database='') #database name
 cur = conn.cursor()
 @app.route("/index")
 def index():
