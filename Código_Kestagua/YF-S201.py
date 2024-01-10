@@ -103,21 +103,6 @@ while True:
         print(round(total_liters,4),'(L) total')
         print(round(seconds/60,4), '(min) total')
         print('-------------------------------------')
-
-        
-        json_body = [{
-        "measurement": "temperature",
-        "tags": {
-            "serial": "WF-"+str(pin_input),
-            "type": "WaterFlow"
-        },
-        "time": current_time,
-        "fields": {
-            "good_sample": float(db_good_sample),
-            "hz": db_hz,
-            "liter_by_min": db_liter_by_min
-        }
-        }]
   
     except KeyboardInterrupt:
         print('\n CTRL+C - Exiting')
