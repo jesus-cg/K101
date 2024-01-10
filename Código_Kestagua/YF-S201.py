@@ -1,6 +1,7 @@
+from time import sleep
 import time, sys
 import RPi.GPIO as GPIO
-from datetime import datetime
+import datetime
 import pymysql
 
 DEBUG = False
@@ -36,7 +37,9 @@ db_good_sample = 0
 db_hz = 0
 db_liter_by_min = 0
 
-print("Water Flow - YF-S201 measurment")
+#cur = db_connection.cursor()
+
+print("Water Flow - YF-S201 measurement")
 
 while True:
     

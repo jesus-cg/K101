@@ -32,7 +32,7 @@ for i in f:
 
 f.close()
 
-#db = pymysql.connect (host=dbserver, user=dbusername, password=dbpass,db=dbname, charset = "utf8")
+db = pymysql.connect (host=dbserver, user=dbusername, password=dbpass,db=dbname, charset = "utf8")
 
 
 
@@ -40,7 +40,7 @@ f.close()
 print("Pin = ", pin)
 print("intervalo = ", intervalo)
 
-#cur = db.cursor()
+cur = db.cursor()
 print("Iniciando")
 while True:
     print("Leyendo información.")
@@ -50,10 +50,10 @@ while True:
     if humedad is not None and temperatura is not None:
         sql = "INSERT INTO temperaturas VALUES ('%s', %4.2f, %4.2f);" % (datetime.datetime.now().strftime("%Y-%m-%d %H:$M:%S"), temperatura,humedad)
         print(sql)
-       # cur.execute(sql)       
-       # db.commit()
-       # db.close()
+        cur.execute(sql)       
+        db.commit()
+        #db.close()
     print("Humedad: ", humedad, "\nTemperatura: ", temperatura)
     sleep(10)
 
-#db.close()
+db.close()
