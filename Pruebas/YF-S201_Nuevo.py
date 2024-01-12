@@ -14,14 +14,25 @@ INFLUX_ENABLE = 'yes'
 sample_rate = 2 
 m = 0.0021 
 
+#Lists
+listfif = []
+listthi = []
+listsix = []
+
+#Counter variables
+i = 0
+
+#Constants
+fifmin = 21600
+thimin = 43200
+sixmin = 86400
+
 try:
     db_connection=pymysql.connect(host=dbserver,user=dbusername,passwd=dbpass,db=dbnamer)
     print("Conexion con base de datos")
 except pymysql.MySQLError as e:             #se agrego la conexion a base de datos
     print(f"Error al conectar: {e}")
     sys.exit(1) 
-
-
 
 
 pin_input = 8
@@ -76,10 +87,10 @@ while True:
         current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
         #This helps to identify the first measurement - Chuy
-        if time_start == 0:
+        if i == 0:
             current_date_start = datetime.now().strf('%d')
-            current_date_start_15 = datetime.now().strf('%d')
         current__date = datetime.now().strf('%d')
+        i += 1    
         try:
             with db_connection.cursor() as cursor:
                 sql = "INSERT INTO Registros(DATETIME, db_hz, db_liter_by_min) VALUES('%s', %2.1f, %4.2f);" % (current_time, db_hz, db_liter_by_min)
@@ -108,7 +119,7 @@ while True:
         minutes = seconds/60,4
         print("\t", db_hz,'(hz) average')
         print('\t', db_liter_by_min,'(L/min)') 
-        print(round(total_liters,4),'(L) total')
+        print(round(total_liters,4),"(L) today's total")
         print(round(minutes), '(min) total')
         print('-------------------------------------')
 
@@ -118,13 +129,34 @@ while True:
             average_daily_consumption = total_liters/minutes
         else:
             average_daily_consumption = 0
-            current_date_start = datetime.now().strf('%d')
+            total_liters = 0
+            seconds = 0
+            i = 0
+            listfif.append(total_liters) #list of daily consumption
+            listthi.append(total_liters) #list of daily consumption
+            listsix.append(total_liters) #list of daily consumption
         
         #15 days consumption
-        #ddiff = current__date - current_date_start_15
-        #if ddiff.days == current__date:
-        #    average_consumption_15 = 
+        if len(listfif) == 15:
+            average_fifteen_consumption = sum(listfif)/fifmin
+        elif len(listfif) > 15:
+            listfif.remove(listfif[0])
+            average_fifteen_consumption = sum(listfif)/fifmin
 
+        #30 days consumption
+        if len(listthi) == 30:
+            average_thirty_consumption = sum(listthi)/thimin
+        elif len(listfif) > 30:
+            listthi.remove(listthi[0])
+            average_thirty_consumption = sum(listthi)/thimin
+        
+        #60 days consumption
+        if len(listsix) == 60:
+            average_sixty_consumption = sum(listsix)/sixmin
+        elif len(listsix) > 60:
+            listsix.remove(listsix[0])
+            average_sixty_consumption = sum(listsix)/sixmin
+        
         json_body = [{
         "measurement": "temperature",
         "tags": {
