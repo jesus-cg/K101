@@ -11,8 +11,8 @@ body {
     margin: auto;
     overflow: hidden;
     padding: 40px;
-    background-color: #fff;
-    border-radius: 8px;
+    background-color: #add8e6;
+    border-radius: 8px solid #ff4500;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
