@@ -4,11 +4,15 @@ app = Flask(__name__)
 
 @app.route("/")
 def welcome():
-    return "<h1>Welcome to Kestagua</h1>"
+    return render_template("welcome.html")
 
-@app.route("/Registro")
-def registro():
-    return "<h1>Welcome to Kestagua</h1>"
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+@app.route("/registros")
+def registros():
+    return render_template("registro.html")
 
 if __name__== '__main__' :
     app.run(debug=True)
