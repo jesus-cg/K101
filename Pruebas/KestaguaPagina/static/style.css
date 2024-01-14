@@ -29,7 +29,13 @@ body {
     transition: color 0.3s ease;
 }
 
+.nav-menu li a:hover {
+    color: #545F66;
+}
 
+.nav-menu li:hover{
+    background: linear-gradient(120deg, #d0f4ea,#ebfcc2);
+}
 
 .nav-menu li:hover a{
     color: #4b574a;
