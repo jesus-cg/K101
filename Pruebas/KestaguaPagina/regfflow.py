@@ -123,7 +123,7 @@ while True:
         print(round(minutes), '(min) total')
         print('-------------------------------------')
 
-        #conditionals needed to post these values in the route named "Registro" - Chuy
+        #conditionals needed to post these values in the route named "registro" - Chuy
         #daily consumption
         if current_date_start == current__date:
             average_daily_consumption = total_liters/minutes
