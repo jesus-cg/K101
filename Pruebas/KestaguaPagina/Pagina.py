@@ -1,15 +1,16 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, flash, redirect, url_for
 from forms import CrearCuenta, IniciarSesion
-#import regfflow
+##import regfflow
+#from regfflow import registart
 
 app = Flask(__name__)
 
 app.config['CLAVE_SECRETA'] = 'K101'
 
-average_daily_consumption = 0
-average_fifteen_consumption = 0
-average_thirty_consumption = 0
-average_sixty_consumption = 0
+#average_daily_consumption = regfflow.average_daily_consumption
+#average_fifteen_consumption = regfflow.average_fifteen_consumption
+#average_thirty_consumption = regfflow.average_thirty_consumption
+#average_sixty_consumption = regfflow.average_sixty_consumption
 
 @app.route("/")
 def welcome():
@@ -18,6 +19,9 @@ def welcome():
 @app.route("/create-account")
 def ccacount():
     form =  CrearCuenta()
+    if form.validate_on_submit():
+        #flash(f"¡Cuenta creada para {form.username.data}!", "success")
+        return redirect(url_for("welcome"))
     #return render_template("create_account.html", form = form)
 
 @app.route("/login")
