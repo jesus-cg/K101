@@ -282,3 +282,12 @@ def flume(): #registramos los flujos del usuario
             db_connection.close()
             GPIO.cleanup()
             sys.exit()
+
+#def flumestop():
+#try:
+#    with db_connection.cursor() as cursor:
+#        sql = "INSERT INTO Kestagua(F)DB_", gendatabase.username, "(REGISTRO,TIEMPO TOTAL,db_liter_by_min) VALUES('%i','%s', %4.2f);" % (current_time, db_hz, db_liter_by_min)
+#        cursor.execute(sql)
+#    db_connection.commit()
+#except pymysql.MySQLError as e:
+#    print(f"Error al crear la base de datos: {e}")
