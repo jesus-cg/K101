@@ -1,6 +1,6 @@
-from flask import Flask, render_template, flash, redirect, url_for
+from flask import Flask, render_template, flash, redirect, request, url_for
 from forms import CrearCuenta, IniciarSesion
-##import regfflow
+#import regfflow
 #from regfflow import registart
 
 app = Flask(__name__)
@@ -20,7 +20,7 @@ def welcome():
 def ccacount():
     form =  CrearCuenta()
     if form.validate_on_submit():
-        #flash(f"¡Cuenta creada para {form.username.data}!", "success")
+        flash(f"¡Cuenta creada para {form.username.data}!", "success")
         return redirect(url_for("welcome"))
     #return render_template("create_account.html", form = form)
 
@@ -36,6 +36,12 @@ def contact():
 @app.route("/registros")
 def registros():
     return render_template("registro.html", average_daily_consumption = average_daily_consumption, average_fifteen_consumption = average_fifteen_consumption, average_thirty_consumption = average_thirty_consumption, average_sixty_consumption = average_sixty_consumption)
+
+@app.route("/flujo", methods=["POST", "GET"])
+def flujo():
+    #return render_template("flujo.html")
+    if request.method == "POST":
+        regfflow.flume()
 
 if __name__== '__main__' :
     app.run(debug=True)
