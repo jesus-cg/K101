@@ -16,7 +16,7 @@ app.config['CLAVE_SECRETA'] = 'K101'
 def welcome():
     return render_template("inicio.html")
 
-@app.route("/create-account")
+@app.route("/crear-cuenta")
 def ccacount():
     form =  CrearCuenta()
     if form.validate_on_submit():
