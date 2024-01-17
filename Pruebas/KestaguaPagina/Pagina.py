@@ -19,15 +19,16 @@ def welcome():
 @app.route("/crear-cuenta")
 def ccacount():
     form =  CrearCuenta()
+    return render_template("crear-cuenta.html", form = form)
     if form.validate_on_submit():
         flash(f"¡Cuenta creada para {form.username.data}!", "success")
         return redirect(url_for("welcome"))
-    #return render_template("create_account.html", form = form)
+     
 
 @app.route("/login")
 def isesion():
     form =  IniciarSesion()
-    #return render_template("login.html", form = form)
+    return render_template("login.html", form = form)
 
 @app.route("/contact")
 def contact():
@@ -39,7 +40,7 @@ def registros():
 
 @app.route("/flujo", methods=["POST", "GET"])
 def flujo():
-    #return render_template("flujo.html")
+    return render_template("flujo.html")
     if request.method == "POST":
         regfflow.flume()
 
