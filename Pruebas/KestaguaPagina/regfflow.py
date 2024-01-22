@@ -6,10 +6,10 @@ from datetime import datetime
 import pymysql
 
 #import other codes
-#import forms
+import forms
 import Pagina
 
-
+'''
 def gendatabase(): #Generamos una database para cada usuario :3
     DEBUG = False
     dbserver = "192.168.1.252"
@@ -29,7 +29,7 @@ def gendatabase(): #Generamos una database para cada usuario :3
     try:
         with db_connection.cursor() as cursor:
             #Crea una base de datos para el registro continuo :o
-            sql = "CREATE TABLE Kestagua(P)DB_", username, " AS SELECT (DATETIME,db_hz,db_liter_by_min) FROM Registros"
+            sql = "INSERT INTO Kestagua(P)DB_", username, " AS SELECT (DATETIME,db_hz,db_liter_by_min) FROM Registros"
             cursor.execute(sql)
             #Crea una base de datos para los flujos que quieran hacer ;>
             #lqs = "CREATE TABLE Kestagua(F)DB_", username, " (REGISTRO INT(100000),TIEMPO TOTAL TIME(100000),db_liter_by_min FLOAT(p))"
@@ -40,7 +40,7 @@ def gendatabase(): #Generamos una database para cada usuario :3
         db_connection.commit()
     except pymysql.MySQLError as e:
         print(f"Error al crear la base de datos: {e}")
-
+'''
 
 
 def registart(): #Needed to be able to use it in our webpage
@@ -51,7 +51,8 @@ def registart(): #Needed to be able to use it in our webpage
     dbpass = "1234"
     INFLUX_ENABLE = 'yes'
     sample_rate = 2 
-    m = 0.0021 
+    m = 0.0021
+    ID = 1234 #de prueba
 
     #Lists
     listfif = []
@@ -188,8 +189,7 @@ def registart(): #Needed to be able to use it in our webpage
             
             try:
                 with db_connection.cursor() as cursor:
-                    sql = "INSERT INTO Registros(DATETIME, db_hz, db_liter_by_min) VALUES('%s', %2.1f, %4.2f);" % (current_time, db_hz, db_liter_by_min)
-                    #sql = "INSERT INTO Kestagua(P)DB_", gendatabase.username, "(DATETIME, db_hz, db_liter_by_min) VALUES('%s', %2.1f, %4.2f);" % (current_time, db_hz, db_liter_by_min)
+                    sql = "INSERT INTO Kegistros(ID, DATETIME, db_hz, db_liter_by_min) VALUES('%i, '%s', %2.1f, %4.2f);" % (ID,current_time, db_hz, db_liter_by_min)
                     cursor.execute(sql)
                 db_connection.commit()
             except pymysql.MySQLError as e:
@@ -205,6 +205,26 @@ def registart(): #Needed to be able to use it in our webpage
     db_connection.close()
     print('Done')
 
+def showreg():
+    DEBUG = False
+    dbserver = "192.168.1.252"
+    dbnamer = "Kestagua"
+    dbusername = "root"
+    dbpass = "1234"
+    INFLUX_ENABLE = 'yes'
+    sample_rate = 2 
+    m = 0.0021
+    ID = 1234 #de prueba
+    
+    try:
+        db_connection=pymysql.connect(host=dbserver,user=dbusername,passwd=dbpass,db=dbnamer)
+        print("Conexion con la base de datos")
+    except pymysql.MySQLError as e:             #se agregó la conexion a base de datos
+        print(f"Error al conectar: {e}")
+        sys.exit(1) 
+
+
+
 
 def flume(): #registramos los flujos del usuario
     DEBUG = False
@@ -215,6 +235,7 @@ def flume(): #registramos los flujos del usuario
     INFLUX_ENABLE = 'yes'
     sample_rate = 2 
     m = 0.0021 
+    ID = 1234 #Prueba
 
     try:
         db_connection=pymysql.connect(host=dbserver,user=dbusername,passwd=dbpass,db=dbnamer)
@@ -260,6 +281,11 @@ def flume(): #registramos los flujos del usuario
                         sys.stdout.flush()
                 current = v;
 
+            if i == 0:
+                current_time_start = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+            current__time = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+            i += 1
+
             print('-------------------------------------')
             print('Start:',time.asctime(time.localtime()))
             
@@ -283,11 +309,19 @@ def flume(): #registramos los flujos del usuario
             GPIO.cleanup()
             sys.exit()
 
-#def flumestop():
-#try:
-#    with db_connection.cursor() as cursor:
-#        sql = "INSERT INTO Kestagua(F)DB_", gendatabase.username, "(REGISTRO,TIEMPO TOTAL,db_liter_by_min) VALUES('%i','%s', %4.2f);" % (current_time, db_hz, db_liter_by_min)
-#        cursor.execute(sql)
-#    db_connection.commit()
-#except pymysql.MySQLError as e:
-#    print(f"Error al crear la base de datos: {e}")
+def flumestop(current_time_start, current__time, db_connection):
+    DEBUG = False
+    dbserver = "192.168.1.252"
+    dbnamer = "Kestagua"
+    dbusername = "root"
+    dbpass = "1234"
+    INFLUX_ENABLE = 'yes'
+    ID = 1234 #de prueba
+
+    try:
+        with db_connection.cursor() as cursor:
+            sql = "INSERT INTO Flugua (ID, REGISTRO,TIEMPO TOTAL,db_liter_by_min) VALUES('%i','%s', '%s', %4.2f);" % (ID, db_liter_by_min)
+            cursor.execute(sql)
+        db_connection.commit()
+    except pymysql.MySQLError as e:
+        print(f"Error al crear la base de datos: {e}")
