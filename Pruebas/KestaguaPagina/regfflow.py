@@ -45,6 +45,7 @@ def gendatabase(): #Generamos una database para cada usuario :3
 
 def registart(): #Needed to be able to use it in our webpage
     DEBUG = False
+    db_connection = None
     dbserver = "192.168.1.252"
     dbnamer = "Kestagua"
     dbusername = "root"
@@ -54,6 +55,12 @@ def registart(): #Needed to be able to use it in our webpage
     m = 0.0021
     ID = 1234 #de prueba
 
+    #Defining some variables
+    average_daily_consumption = 0
+    average_fifteen_consumption = 0
+    average_thirty_consumption = 0
+    average_sixty_consumption = 0    
+    
     #Lists
     listfif = []
     listthi = []
@@ -157,6 +164,7 @@ def registart(): #Needed to be able to use it in our webpage
             #daily consumption
             if current_date_start == current__date:
                 average_daily_consumption = total_liters/minutes
+                return average_daily_consumption
             else:
                 average_daily_consumption = 0
                 total_liters = 0
@@ -169,23 +177,29 @@ def registart(): #Needed to be able to use it in our webpage
             #15 days consumption
             if len(listfif) == 15:
                 average_fifteen_consumption = sum(listfif)/fifmin
+                return average_fifteen_consumption
             elif len(listfif) > 15:
                 listfif.remove(listfif[0])
                 average_fifteen_consumption = sum(listfif)/fifmin
+                return average_fifteen_consumption
 
             #30 days consumption
             if len(listthi) == 30:
                 average_thirty_consumption = sum(listthi)/thimin
+                return average_thirty_consumption
             elif len(listfif) > 30:
                 listthi.remove(listthi[0])
                 average_thirty_consumption = sum(listthi)/thimin
-            
+                return average_thirty_consumption
+                        
             #60 days consumption
             if len(listsix) == 60:
                 average_sixty_consumption = sum(listsix)/sixmin
+                return average_sixty_consumption
             elif len(listsix) > 60:
                 listsix.remove(listsix[0])
                 average_sixty_consumption = sum(listsix)/sixmin
+                return average_sixty_consumption
             
             try:
                 with db_connection.cursor() as cursor:
@@ -205,29 +219,45 @@ def registart(): #Needed to be able to use it in our webpage
     db_connection.close()
     print('Done')
 
-def showreg():
+def showreg(query):
     DEBUG = False
+    db_connection = None
+    cur = None  
     dbserver = "192.168.1.252"
     dbnamer = "Kestagua"
     dbusername = "root"
     dbpass = "1234"
+    charst = 'utf8'
     INFLUX_ENABLE = 'yes'
     sample_rate = 2 
     m = 0.0021
     ID = 1234 #de prueba
     
     try:
-        db_connection=pymysql.connect(host=dbserver,user=dbusername,passwd=dbpass,db=dbnamer)
+        db_connection=pymysql.connect(host=dbserver,user=dbusername,passwd=dbpass,db=dbnamer, charset=charst)
         print("Conexion con la base de datos")
     except pymysql.MySQLError as e:             #se agregó la conexion a base de datos
         print(f"Error al conectar: {e}")
-        sys.exit(1) 
+        sys.exit(1)
+    
+
+
+    try:
+        cur = db_connection.cursor()
+        cur.execute(query)
+        result = cur.fetchall()
+        db_connection.close()
+        return result
+    except pymysql.MySQLError as e:
+        print(f"Error al crear la base de datos: {e}")
+    
 
 
 
 
 def flume(): #registramos los flujos del usuario
     DEBUG = False
+    db_connection = None
     dbserver = "192.168.1.252"
     dbnamer = "Kestagua"
     dbusername = "root"
@@ -254,6 +284,7 @@ def flume(): #registramos los flujos del usuario
     db_good_sample = 0
     db_hz = 0
     db_liter_by_min = 0
+    i = 0
 
     while True:
         time_start = time.time();
@@ -309,18 +340,38 @@ def flume(): #registramos los flujos del usuario
             GPIO.cleanup()
             sys.exit()
 
-def flumestop(current_time_start, current__time, db_connection):
+def flumestop(current_time, current_time_start, db_liter_by_min):
     DEBUG = False
+    db_connection = None
     dbserver = "192.168.1.252"
     dbnamer = "Kestagua"
     dbusername = "root"
     dbpass = "1234"
     INFLUX_ENABLE = 'yes'
     ID = 1234 #de prueba
+    regname = "Registro N.#"
+
+
+    try:
+        db_connection=pymysql.connect(host=dbserver,user=dbusername,passwd=dbpass,db=dbnamer)
+        print("Conexion con la base de datos")
+    except pymysql.MySQLError as e:             #se agregó la conexion a base de datos ;P
+        print(f"Error al conectar: {e}")
+        sys.exit(1) 
+
+
+    date_format = "%d/%m/%Y %H:%M:%S"
+
+    start = datetime.strptime(current_time_start, date_format)
+    end = datetime.strptime(current_time, date_format)
+
+    time_difference = end - start
+    time_difference_in_hours = time_difference.total_seconds() / 3600
+
 
     try:
         with db_connection.cursor() as cursor:
-            sql = "INSERT INTO Flugua (ID, REGISTRO,TIEMPO TOTAL,db_liter_by_min) VALUES('%i','%s', '%s', %4.2f);" % (ID, db_liter_by_min)
+            sql = "INSERT INTO Flugua (ID, REGISTRO,TIEMPO TOTAL,db_liter_by_min) VALUES('%i','%s', '%s', %4.2f);" % (ID, regname, time_difference_in_hours, db_liter_by_min)
             cursor.execute(sql)
         db_connection.commit()
     except pymysql.MySQLError as e:

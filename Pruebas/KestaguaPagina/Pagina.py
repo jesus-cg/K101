@@ -1,7 +1,8 @@
 from flask import Flask, render_template, flash, redirect, request, url_for
 from forms import CrearCuenta, IniciarSesion
 import regfflow
-from regfflow import registart
+from regfflow import registart, flume, flumestop, showreg
+import pymysql
 
 app = Flask(__name__)
 
@@ -44,5 +45,14 @@ def flujo():
     if request.method == "POST":
         regfflow.flume()
 
+@app.route("/base-de-registros")
+def database():
+    sql = "SELECT ID, DATETIME, db_hz, db_liter_by_min FROM Kegistros ORDER BY DATETIME ASC LIMIT 21600"
+    result = regfflow.showreg(sql)
+    return render_template("database.html", result = result)
+
+
 if __name__== '__main__' :
     app.run(debug=True)
+    #Whenever you need to use it with the Rasp, use:
+    #app.run(debug=True, port=80, host="RPi")
