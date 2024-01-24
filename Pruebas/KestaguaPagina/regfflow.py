@@ -409,3 +409,6 @@ def flumestop(current_time, current_time_start, db_liter_by_min):
         db_connection.commit()
     except pymysql.MySQLError as e:
         print(f"Error al crear la base de datos: {e}")
+
+
+registart()
