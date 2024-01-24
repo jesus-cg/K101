@@ -6,42 +6,8 @@ from datetime import datetime
 import pymysql
 
 #import other codes
-import forms
+#import forms
 import Pagina
-
-'''
-def gendatabase(): #Generamos una database para cada usuario :3
-    DEBUG = False
-    dbserver = "192.168.1.252"
-    dbnamer = "Kestagua"
-    dbusername = "root"
-    dbpass = "1234"
-    INFLUX_ENABLE = 'yes'
-
-    username = Pagina.ccacount.username
-
-    try:
-        db_connection=pymysql.connect(host=dbserver,user=dbusername,passwd=dbpass,db=dbnamer)
-        print("Conexion con la base de datos")
-    except pymysql.MySQLError as e:             #se agregó la conexion a base de datos ;P
-        print(f"Error al conectar: {e}")
-        sys.exit(1) 
-    try:
-        with db_connection.cursor() as cursor:
-            #Crea una base de datos para el registro continuo :o
-            sql = "INSERT INTO Kestagua(P)DB_", username, " AS SELECT (DATETIME,db_hz,db_liter_by_min) FROM Registros"
-            cursor.execute(sql)
-            #Crea una base de datos para los flujos que quieran hacer ;>
-            #lqs = "CREATE TABLE Kestagua(F)DB_", username, " (REGISTRO INT(100000),TIEMPO TOTAL TIME(100000),db_liter_by_min FLOAT(p))"
-            #Sale mejor crear una template y copiarla con la siguiente línea de código:
-            #lqs = "CREATE TABLE Kestagua(P)DB_", username, " AS SELECT (REGISTRO,TIEMPO TOTAL,db_liter_by_min) FROM Flujos"
-            #cursor.execute(lqs)
-
-        db_connection.commit()
-    except pymysql.MySQLError as e:
-        print(f"Error al crear la base de datos: {e}")
-'''
-
 
 def registart(): #Needed to be able to use it in our webpage
     DEBUG = False
@@ -54,25 +20,6 @@ def registart(): #Needed to be able to use it in our webpage
     sample_rate = 2 
     m = 0.0021
     ID = 1234 #de prueba
-
-    #Defining some variables
-    average_daily_consumption = 0
-    average_fifteen_consumption = 0
-    average_thirty_consumption = 0
-    average_sixty_consumption = 0    
-    
-    #Lists
-    listfif = []
-    listthi = []
-    listsix = []
-
-    #Counter variables
-    i = 0
-
-    #Constants
-    fifmin = 21600
-    thimin = 43200
-    sixmin = 86400
 
     try:
         db_connection=pymysql.connect(host=dbserver,user=dbusername,passwd=dbpass,db=dbnamer)
@@ -95,6 +42,7 @@ def registart(): #Needed to be able to use it in our webpage
     db_good_sample = 0
     db_hz = 0
     db_liter_by_min = 0
+    daily_db_liter_by_min = 0
 
     #cur = db_connection.cursor()
 
@@ -126,16 +74,11 @@ def registart(): #Needed to be able to use it in our webpage
                         sys.stdout.flush()
                 current = v;
 
+            #Our way to certify that the code is working :>
             print('-------------------------------------')
             print('Current Time:',time.asctime(time.localtime()))
             
             current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            
-            #This helps to identify the first measurement - Chuy ;P
-            if i == 0:
-                current_date_start = datetime.now().strf('%d')
-            current__date = datetime.now().strf('%d')
-            i += 1    
 
             seconds += sample_rate
             nb_samples = len(hz);
@@ -152,58 +95,16 @@ def registart(): #Needed to be able to use it in our webpage
             average_liters = average*m*sample_rate;
             total_liters += average_liters
             db_hz = round(average,4);
+            daily_db_liter_by_min = round(total_liters*(60/seconds),4)
             db_liter_by_min= round(average_liters*(60/sample_rate),4)
-            minutes = seconds/60
+            
             print("\t", db_hz,'(hz) average')
             print('\t', db_liter_by_min,'(L/min)') 
             print(round(total_liters,4),"(L) today's total")
-            print(round(minutes), '(min) total')
             print('-------------------------------------')
-
-            #conditionals needed to post these values in the route named "registro" - Chuy
-            #daily consumption
-            if current_date_start == current__date:
-                average_daily_consumption = total_liters/minutes
-                return average_daily_consumption
-            else:
-                average_daily_consumption = 0
-                total_liters = 0
-                seconds = 0
-                i = 0
-                listfif.append(total_liters) #list of daily consumption
-                listthi.append(total_liters) #list of daily consumption
-                listsix.append(total_liters) #list of daily consumption
-            
-            #15 days consumption
-            if len(listfif) == 15:
-                average_fifteen_consumption = sum(listfif)/fifmin
-                return average_fifteen_consumption
-            elif len(listfif) > 15:
-                listfif.remove(listfif[0])
-                average_fifteen_consumption = sum(listfif)/fifmin
-                return average_fifteen_consumption
-
-            #30 days consumption
-            if len(listthi) == 30:
-                average_thirty_consumption = sum(listthi)/thimin
-                return average_thirty_consumption
-            elif len(listfif) > 30:
-                listthi.remove(listthi[0])
-                average_thirty_consumption = sum(listthi)/thimin
-                return average_thirty_consumption
-                        
-            #60 days consumption
-            if len(listsix) == 60:
-                average_sixty_consumption = sum(listsix)/sixmin
-                return average_sixty_consumption
-            elif len(listsix) > 60:
-                listsix.remove(listsix[0])
-                average_sixty_consumption = sum(listsix)/sixmin
-                return average_sixty_consumption
-            
             try:
                 with db_connection.cursor() as cursor:
-                    sql = "INSERT INTO Kegistros(ID, DATETIME, db_hz, db_liter_by_min) VALUES('%i, '%s', %2.1f, %4.2f);" % (ID,current_time, db_hz, db_liter_by_min)
+                    sql = "INSERT INTO Kegistros(ID, DATETIME, LITMIN, DCONS, LITCONS) VALUES('%i', '%s', '%4.2f', '%6.2f', '%6.2f' );" % (ID,current_time, db_liter_by_min, daily_db_liter_by_min, total_liters)
                     cursor.execute(sql)
                 db_connection.commit()
             except pymysql.MySQLError as e:
@@ -218,6 +119,134 @@ def registart(): #Needed to be able to use it in our webpage
     GPIO.cleanup()
     db_connection.close()
     print('Done')
+
+def avgd():
+    DEBUG = False
+    db_connection = None
+    dbserver = "192.168.1.252"
+    dbnamer = "Kestagua"
+    dbusername = "root"
+    dbpass = "1234"
+    INFLUX_ENABLE = 'yes'
+    sample_rate = 2 
+    m = 0.0021
+    ID = 1234 #de prueba
+
+    average_daily_consumption = 0
+
+    try:
+        db_connection=pymysql.connect(host=dbserver,user=dbusername,passwd=dbpass,db=dbnamer)
+        print("Conexion con la base de datos")
+    except pymysql.MySQLError as e:             #se agregó la conexion a base de datos
+        print(f"Error al conectar: {e}")
+        sys.exit(1) 
+    
+    try:
+        with db_connection.cursor() as cursor:
+            sql = "SELECT DCONS FROM Kegistros WHERE NOW() = DATETIME"
+            cursor.execute(sql)
+            average_daily_consumption = sql
+            #db_connection.commit()
+            return average_daily_consumption
+    except pymysql.MySQLError as e:
+        print(f"Error al consultar los datos: {e}")
+    
+
+def avgfif():
+    DEBUG = False
+    db_connection = None
+    dbserver = "192.168.1.252"
+    dbnamer = "Kestagua"
+    dbusername = "root"
+    dbpass = "1234"
+    INFLUX_ENABLE = 'yes'
+    sample_rate = 2 
+    m = 0.0021
+    ID = 1234 #de prueba
+
+    average_fifteen_consumption = 0
+    fifmin = 21600
+
+    try:
+        db_connection=pymysql.connect(host=dbserver,user=dbusername,passwd=dbpass,db=dbnamer)
+        print("Conexion con la base de datos")
+    except pymysql.MySQLError as e:             #se agregó la conexion a base de datos
+        print(f"Error al conectar: {e}")
+        sys.exit(1) 
+    
+    try:
+        with db_connection.cursor() as cursor:
+            sql = "SELECT SUM(LITCONS) FROM Kegistros WHERE DATEDIFF(NOW(), DATE_SUB(NOW(), INTERVAL 15 DAY))=15"
+            cursor.execute(sql)
+            average_fifteen_consumption = sql/fifmin
+            #db_connection.commit()
+            return average_fifteen_consumption
+    except pymysql.MySQLError as e:
+        print(f"Error al consultar los datos: {e}") 
+
+def avgthi():
+    DEBUG = False
+    db_connection = None
+    dbserver = "192.168.1.252"
+    dbnamer = "Kestagua"
+    dbusername = "root"
+    dbpass = "1234"
+    INFLUX_ENABLE = 'yes'
+    sample_rate = 2 
+    m = 0.0021
+    ID = 1234 #de prueba
+
+    average_thirty_consumption = 0
+    thimin = 43200
+
+    try:
+        db_connection=pymysql.connect(host=dbserver,user=dbusername,passwd=dbpass,db=dbnamer)
+        print("Conexion con la base de datos")
+    except pymysql.MySQLError as e:             #se agregó la conexion a base de datos
+        print(f"Error al conectar: {e}")
+        sys.exit(1) 
+    
+    try:
+        with db_connection.cursor() as cursor:
+            sql = "SELECT SUM(LITCONS) FROM Kegistros WHERE DATEDIFF(NOW(), DATE_SUB(NOW(), INTERVAL 30 DAY))=30"
+            cursor.execute(sql)
+            average_thirty_consumption = sql/thimin
+            #db_connection.commit()
+            return average_thirty_consumption
+    except pymysql.MySQLError as e:
+        print(f"Error al consultar los datos: {e}")
+
+def avgsix():
+    DEBUG = False
+    db_connection = None
+    dbserver = "192.168.1.252"
+    dbnamer = "Kestagua"
+    dbusername = "root"
+    dbpass = "1234"
+    INFLUX_ENABLE = 'yes'
+    sample_rate = 2 
+    m = 0.0021
+    ID = 1234 #de prueba
+
+    average_sixty_consumption = 0
+    sixmin = 86400
+
+    try:
+        db_connection=pymysql.connect(host=dbserver,user=dbusername,passwd=dbpass,db=dbnamer)
+        print("Conexion con la base de datos")
+    except pymysql.MySQLError as e:             #se agregó la conexion a base de datos
+        print(f"Error al conectar: {e}")
+        sys.exit(1) 
+    
+    try:
+        with db_connection.cursor() as cursor:
+            sql = "SELECT SUM(LITCONS) FROM Kegistros WHERE DATEDIFF(NOW(), DATE_SUB(NOW(), INTERVAL 60 DAY))=60"
+            cursor.execute(sql)
+            average_sixty_consumption = sql/sixmin
+            #db_connection.commit()
+            return average_sixty_consumption
+    except pymysql.MySQLError as e:
+        print(f"Error al consultar los datos: {e}")
 
 def showreg(query):
     DEBUG = False
@@ -251,9 +280,6 @@ def showreg(query):
     except pymysql.MySQLError as e:
         print(f"Error al crear la base de datos: {e}")
     
-
-
-
 
 def flume(): #registramos los flujos del usuario
     DEBUG = False
