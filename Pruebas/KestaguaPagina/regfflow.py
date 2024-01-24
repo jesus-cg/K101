@@ -104,7 +104,7 @@ def registart(): #Needed to be able to use it in our webpage
             print('-------------------------------------')
             try:
                 with db_connection.cursor() as cursor:
-                    sql = "INSERT INTO Kegistros(ID, DATETIME, LITMIN, DCONS, LITCONS) VALUES('%i', '%s', '%4.2f', '%6.2f', '%6.2f' );" % (ID,current_time, db_liter_by_min, daily_db_liter_by_min, total_liters)
+                    sql = "INSERT INTO Kegistros(ID, TIEMPO, LITMIN, LITCONS) VALUES('%i', '%s', '%4.2f', '%6.2f' );" % (ID,current_time, db_liter_by_min, daily_db_liter_by_min, total_liters)
                     cursor.execute(sql)
                 db_connection.commit()
             except pymysql.MySQLError as e:
@@ -143,9 +143,11 @@ def avgd():
     
     try:
         with db_connection.cursor() as cursor:
-            sql = "SELECT DCONS FROM Kegistros WHERE NOW() = DATETIME"
+            sql = "SELECT AVG(LITMIN) FROM Kegistros WHERE TIEMPO >= CURDATE() and TIEMPO < (CURDATE()+1)"
             cursor.execute(sql)
-            average_daily_consumption = sql
+            cons= cursor.fetchall()
+            dato1 = cons[0][0]
+            average_daily_consumption = dato1
             #db_connection.commit()
             return average_daily_consumption
     except pymysql.MySQLError as e:
@@ -176,9 +178,11 @@ def avgfif():
     
     try:
         with db_connection.cursor() as cursor:
-            sql = "SELECT SUM(LITCONS) FROM Kegistros WHERE DATEDIFF(NOW(), DATE_SUB(NOW(), INTERVAL 15 DAY))=15"
+            sql = "SELECT SUM(LITCONS) FROM Kegistros WHERE DATEDIFF(CURDATE(), DATE_SUB(CURDATE(), INTERVAL 15 DAY))=15"
             cursor.execute(sql)
-            average_fifteen_consumption = sql/fifmin
+            cons= cursor.fetchall()
+            dato2 = cons[0][0]
+            average_fifteen_consumption = dato2/fifmin
             #db_connection.commit()
             return average_fifteen_consumption
     except pymysql.MySQLError as e:
@@ -208,10 +212,11 @@ def avgthi():
     
     try:
         with db_connection.cursor() as cursor:
-            sql = "SELECT SUM(LITCONS) FROM Kegistros WHERE DATEDIFF(NOW(), DATE_SUB(NOW(), INTERVAL 30 DAY))=30"
+            sql = "SELECT SUM(LITCONS) FROM Kegistros WHERE DATEDIFF(CURDATE(), DATE_SUB(CURDATE(), INTERVAL 30 DAY))=30"
             cursor.execute(sql)
-            average_thirty_consumption = sql/thimin
-            #db_connection.commit()
+            cons= cursor.fetchall()
+            dato3 = cons[0][0]
+            average_thirty_consumption = dato3/thimin
             return average_thirty_consumption
     except pymysql.MySQLError as e:
         print(f"Error al consultar los datos: {e}")
@@ -240,9 +245,11 @@ def avgsix():
     
     try:
         with db_connection.cursor() as cursor:
-            sql = "SELECT SUM(LITCONS) FROM Kegistros WHERE DATEDIFF(NOW(), DATE_SUB(NOW(), INTERVAL 60 DAY))=60"
+            sql = "SELECT SUM(LITCONS) FROM Kegistros WHERE DATEDIFF(CURDATE(), DATE_SUB(CURDATE(), INTERVAL 60 DAY))=60"
             cursor.execute(sql)
-            average_sixty_consumption = sql/sixmin
+            cons= cursor.fetchall()
+            dato4 = cons[0][0]
+            average_sixty_consumption = dato4/sixmin
             #db_connection.commit()
             return average_sixty_consumption
     except pymysql.MySQLError as e:
