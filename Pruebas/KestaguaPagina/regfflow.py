@@ -9,13 +9,19 @@ import pymysql
 #import forms
 import Pagina
 
+
+dbserver = "172.32.180.247"
+dbnamer = "Kestagua"
+dbusername = "root"
+dbpass = "1234"
+
 def registart(): #Needed to be able to use it in our webpage
     DEBUG = False
-    db_connection = None
-    dbserver = "192.168.1.252"
-    dbnamer = "Kestagua"
-    dbusername = "root"
-    dbpass = "1234"
+    global db_connection
+    global dbserver
+    global dbnamer
+    global dbusername
+    global dbpass
     INFLUX_ENABLE = 'yes'
     sample_rate = 2 
     m = 0.0021
@@ -104,8 +110,9 @@ def registart(): #Needed to be able to use it in our webpage
             print('-------------------------------------')
             try:
                 with db_connection.cursor() as cursor:
-                    sql = "INSERT INTO Kegistros(ID, TIEMPO, LITMIN, LITCONS) VALUES('%i', '%s', '%4.2f', '%6.2f' );" % (ID,current_time, db_liter_by_min, daily_db_liter_by_min, total_liters)
-                    cursor.execute(sql)
+                    sql = "INSERT INTO Kegistros(ID, TIEMPO, LITMIN, LITCONS) VALUES('%i', '%s', '%4.2f', '%6.2f' );"
+                    data = (int(ID), current_time, db_liter_by_min, daily_db_liter_by_min)
+                    cursor.execute(sql, data)
                 db_connection.commit()
             except pymysql.MySQLError as e:
                 print(f"Error al enviar a la base de datos: {e}")
@@ -122,11 +129,11 @@ def registart(): #Needed to be able to use it in our webpage
 
 def avgd():
     DEBUG = False
-    db_connection = None
-    dbserver = "192.168.1.252"
-    dbnamer = "Kestagua"
-    dbusername = "root"
-    dbpass = "1234"
+    global db_connection
+    global dbserver
+    global dbnamer
+    global dbusername
+    global dbpass
     INFLUX_ENABLE = 'yes'
     sample_rate = 2 
     m = 0.0021
@@ -156,11 +163,11 @@ def avgd():
 
 def avgfif():
     DEBUG = False
-    db_connection = None
-    dbserver = "192.168.1.252"
-    dbnamer = "Kestagua"
-    dbusername = "root"
-    dbpass = "1234"
+    global db_connection
+    global dbserver
+    global dbnamer
+    global dbusername
+    global dbpass
     INFLUX_ENABLE = 'yes'
     sample_rate = 2 
     m = 0.0021
@@ -190,11 +197,11 @@ def avgfif():
 
 def avgthi():
     DEBUG = False
-    db_connection = None
-    dbserver = "192.168.1.252"
-    dbnamer = "Kestagua"
-    dbusername = "root"
-    dbpass = "1234"
+    global db_connection
+    global dbserver
+    global dbnamer
+    global dbusername
+    global dbpass
     INFLUX_ENABLE = 'yes'
     sample_rate = 2 
     m = 0.0021
@@ -223,11 +230,11 @@ def avgthi():
 
 def avgsix():
     DEBUG = False
-    db_connection = None
-    dbserver = "192.168.1.252"
-    dbnamer = "Kestagua"
-    dbusername = "root"
-    dbpass = "1234"
+    global db_connection
+    global dbserver
+    global dbnamer
+    global dbusername
+    global dbpass
     INFLUX_ENABLE = 'yes'
     sample_rate = 2 
     m = 0.0021
@@ -257,13 +264,13 @@ def avgsix():
 
 def showreg(query):
     DEBUG = False
-    db_connection = None
+    #db_connection = None
     cur = None  
-    dbserver = "192.168.1.252"
-    dbnamer = "Kestagua"
-    dbusername = "root"
-    dbpass = "1234"
-    charst = 'utf8'
+    global db_connection
+    global dbserver
+    global dbnamer
+    global dbusername
+    global dbpass
     INFLUX_ENABLE = 'yes'
     sample_rate = 2 
     m = 0.0021
@@ -276,8 +283,6 @@ def showreg(query):
         print(f"Error al conectar: {e}")
         sys.exit(1)
     
-
-
     try:
         cur = db_connection.cursor()
         cur.execute(query)
@@ -290,11 +295,11 @@ def showreg(query):
 
 def flume(): #registramos los flujos del usuario
     DEBUG = False
-    db_connection = None
-    dbserver = "192.168.1.252"
-    dbnamer = "Kestagua"
-    dbusername = "root"
-    dbpass = "1234"
+    global db_connection
+    global dbserver
+    global dbnamer
+    global dbusername
+    global dbpass
     INFLUX_ENABLE = 'yes'
     sample_rate = 2 
     m = 0.0021 
@@ -375,11 +380,11 @@ def flume(): #registramos los flujos del usuario
 
 def flumestop(current_time, current_time_start, db_liter_by_min):
     DEBUG = False
-    db_connection = None
-    dbserver = "192.168.1.252"
-    dbnamer = "Kestagua"
-    dbusername = "root"
-    dbpass = "1234"
+    global db_connection
+    global dbserver
+    global dbnamer
+    global dbusername
+    global dbpass
     INFLUX_ENABLE = 'yes'
     ID = 1234 #de prueba
     regname = "Registro N.#"
@@ -404,7 +409,7 @@ def flumestop(current_time, current_time_start, db_liter_by_min):
 
     try:
         with db_connection.cursor() as cursor:
-            sql = "INSERT INTO Flugua (ID, REGISTRO,TIEMPO TOTAL,db_liter_by_min) VALUES('%i','%s', '%s', %4.2f);" % (ID, regname, time_difference_in_hours, db_liter_by_min)
+            sql = "INSERT INTO Flugua (REGISTRO,TIEMPO TOTAL,LITMIN) VALUES('%s', '%s', %.2f);" % (regname, time_difference_in_hours, db_liter_by_min)
             cursor.execute(sql)
         db_connection.commit()
     except pymysql.MySQLError as e:
