@@ -2,15 +2,14 @@
 <html>
   <head>
     <title>Kestagua</title>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="Logo2.jpg" type="image/x-icon">
+  
   </head>
   <body>
     <div class="head2">
-      <div class="titulo1">Kestagua</div>
+      <div class="titulo1">
+        Kestagua</div>
       <div class="usua">
         <ul class="lista">
           <li class="ini"><a href="/login">Iniciar sesión</a></li>
@@ -20,12 +19,184 @@
     </div>
     <div class="container">
       <div class="minicon">
-        <h2>¡Bienvenido Usuario!</h2>
+        <h3>¿Quiénes somos?</h3>
         <p></p>
       </div>
       <div class="minicon2">
-        <h3>¿Quiénes somos?</h3>
+        <h2>¡Bienvenido Usuario!</h2>
       </div>
     </div>
+      <div class="carga">
+        <h1>Bienvenido a Kestagua</h1>
+      </div>
   </body>
 </html>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #d3ebff;
+    
+}
+.carga{
+  background-color: #d3ebff;
+  text-align: center;
+  font-size: 40px;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  animation-name: carga;
+  animation-duration: 2.5s;
+  animation-delay: 0;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  position: absolute;
+}
+
+@keyframes carga {
+  0%{
+    opacity: 1;
+    transform: scale(1);
+    width: max-content;
+    height: max-content;
+    top: 30%;
+    left: 360px;
+  }
+  100%{
+    opacity: 0;
+    width: max-content;
+    height: 1px;
+    left: 360px;
+    top: 30%;
+    padding-top: 1px;
+    font-size: 1px;
+  }
+}
+
+.titulo1{
+    color: #2d5168; 
+    top: 50%;
+    font-size: 40px;
+    margin-left: 10px;
+    
+}
+
+.lista{
+    display: flex;
+    list-style: none;
+    margin-right: 15px;
+    position: relative;
+}
+.ini{
+    width: 120px;
+    color: #2d5168;
+    text-align: center;
+    padding: 15px 5px;
+    font-weight: bold;
+    margin-right: 20px;
+    box-shadow: 1px 1px 2px #a1a1a1;
+}
+
+.ini:hover{
+    background-color: #2fa1ff;
+    transition: background-color 1s ease;
+    transform: scale(1.1);
+}
+.reg{
+    width: 120px;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px 5px;
+    box-shadow: 1px 1px 2px #a1a1a1;
+}
+.reg:hover{
+    background-color: #2fa1ff;
+    transition: background-color .5s ease;
+    transform: scale(1.1) ;
+}
+
+li a {
+    text-decoration: none;
+    color: #2d5168;
+}
+li a:hover {
+    transition: color .6s ease;
+    color: #fff;
+    
+}
+
+.head2{
+    background-color: #ffffff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    height: 3em;
+    align-items: center;
+    box-shadow: 1px 1px 5px #353535;
+    animation-name: headani;
+    animation-duration: 2s;
+    animation-delay: 1s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+.container {
+    width: 93%;
+    margin: 20px auto;
+    overflow: hidden;
+    padding: 40px;
+    height: auto;
+    background-color: #ffffff;
+    position: relative;
+    box-shadow: 1px 1px 5px #353535;
+    animation-name: aparicion;
+    animation-duration: 2s;
+    animation-delay: 1s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    display: flex;
+
+}
+.minicon{
+    width: 20%;
+    height: 400px;
+    box-shadow: 1px 1px 3px #a1a1a1;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    font-size: 15px;
+    overflow: hidden;
+    margin-right: 20px;
+}
+.minicon2{
+    box-shadow: 1px 1px 3px #a1a1a1;
+    border-radius: 10px;
+    width: 80%;
+    padding: 5px;
+}
+
+@keyframes aparicion{
+    0%{
+        opacity: 0;
+        transform: scale(2);
+    }
+    100%
+    {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+@keyframes headani{
+    0%{
+        opacity: 0;
+        transform: scale(2) ;
+    }
+    100% 
+    {
+        opacity: 1;
+        transform: scale(1);
+    }        
+}
+</style>
