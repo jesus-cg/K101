@@ -1,18 +1,18 @@
 from flask import Flask, render_template, flash, redirect, request, url_for
 from forms import CrearCuenta, IniciarSesion
-import regfflow
-from regfflow import registart, avgd, avgfif, avgthi, avgsix, flume, flumestop, showreg
+#import regfflow
+#from regfflow import registart, avgd, avgfif, avgthi, avgsix, flume, flumestop, showreg
 import pymysql
 
 app = Flask(__name__)
 
 app.config['CLAVE_SECRETA'] = 'K101'
-
+'''
 average_daily_consumption = avgd.average_daily_consumption
 average_fifteen_consumption = avgfif.average_fifteen_consumption
 average_thirty_consumption = avgthi.average_thirty_consumption
 average_sixty_consumption = avgsix.average_sixty_consumption
-
+'''
 @app.route("/")
 def welcome():
     return render_template("inicio.html")
