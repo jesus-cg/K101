@@ -21,6 +21,7 @@ average_sixty_consumption = avgsix.average_sixty_consumption
 
 @app.route("/")
 def welcome():
+    '''
     dbserver = "172.32.180.247"
     dbnamer = "Kestagua"
     dbusername = "root"
@@ -39,7 +40,7 @@ def welcome():
         print(f"Error al conectar: {e}")
         sys.exit(1) 
 
-
+    
     pin_input = 8
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(pin_input, GPIO.IN)
@@ -139,12 +140,13 @@ def welcome():
             db_connection.close()
             GPIO.cleanup()
             sys.exit()
-        return render_template("inicio.html")
 
     GPIO.cleanup()
     db_connection.close()
     print('Done')
-
+    '''
+    return render_template("inicio.html")
+    
 @app.route("/crear-cuenta")
 def ccacount():
     #form =  CrearCuenta()
