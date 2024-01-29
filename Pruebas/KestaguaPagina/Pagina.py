@@ -37,7 +37,8 @@ def contact():
 
 @app.route("/registros")
 def registros():
-    return render_template("registro.html", average_daily_consumption = average_daily_consumption, average_fifteen_consumption = average_fifteen_consumption, average_thirty_consumption = average_thirty_consumption, average_sixty_consumption = average_sixty_consumption)
+    return render_template("registro.html")
+                           #, average_daily_consumption = average_daily_consumption, average_fifteen_consumption = average_fifteen_consumption, average_thirty_consumption = average_thirty_consumption, average_sixty_consumption = average_sixty_consumption)
 
 @app.route("/flujo", methods=["POST", "GET"])
 def flujo():
