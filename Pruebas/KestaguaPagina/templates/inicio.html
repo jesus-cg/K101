@@ -2,23 +2,315 @@
 <html>
   <head>
     <title>Kestagua</title>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="Logo2.jpg" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
   </head>
   <body>
-    <div class="container">
-        <h1>Kestagua</h1>
-        <u1 class="nav-menu">
-            <li><a href="/crear-cuenta" class="menu-link">Crear una cuenta</a></li>
-            <li><a href="/login" class="menu-link">Iniciar Sesion</a></li>
-            <li><a href="/contact" class="menu-link">Contacto</a></li>
-            </ul>
-
-    
-    
+    <div class="head2">
+      <div class="titulo1">
+        Kestagua</div>
+      <div class="usua">
+        <ul class="lista">
+          <li><button class="ini" onclick="window.location.href='/login'">Iniciar sesión</button></li>
+          <li><button class="reg" onclick="window.location.href='/crear-cuenta'">Registro</button></li>
+        </ul>
+      </div>
     </div>
+    <div class="container">
+      <div class="minicon">
+        <h3>¿Quiénes somos?</h3>
+        <p></p>
+      </div>
+      <div class="minicon2">
+        <h2>¡Bienvenido Usuario!</h2>
+      </div>
+    </div>
+      <div class="carga">
+        <h1>Bienvenido a Kestagua</h1>
+      </div>
+
+      <footer class="pie-pagina">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="#">
+                        <img src="Logo.png" alt="Kestagua">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>SOBRE NOSOTROS</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ipsa?</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ipsa?</p>
+            </div>
+            <div class="box">
+                <h2>SIGUENOS</h2>
+                <div class="red-social">
+                    <a href="#" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-instagram"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-youtube"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <small>&copy; 2024 <b>SLee Dw</b> - Todos los Derechos Reservados.</small>
+        </div>
+    </footer>
   </body>
 </html>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var fecha = new Date();
+    var ano = fecha.getFullYear();
+    var mes = fecha.getMonth() + 1;
+    var dia = fecha.getDate();
+    var fechaActual = dia + '/' + mes + '/' + ano;
+    var elementoFecha = document.getElementById("fecha-actualizacion");
+    elementoFecha.innerHTML = 'Última actualización: ' + fechaActual;
+  });
+</script>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #d3ebff;
+    
+}
+.carga{
+  background-color: #d3ebff;
+  text-align: center;
+  font-size: 40px;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  animation-name: carga;
+  animation-duration: 2.5s;
+  animation-delay: 0;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  position: absolute;
+}
+
+
+
+.titulo1{
+    color: #2d5168; 
+    top: 50%;
+    font-size: 40px;
+    margin-left: 10px;
+    
+}
+
+.lista{
+    display: flex;
+    list-style: none;
+    margin-right: 15px;
+    position: relative;
+}
+.ini{
+    width: 120px;
+    color: #2d5168;
+    text-align: center;
+    padding: 15px 5px;
+    font-weight: bold;
+    margin-right: 20px;
+    box-shadow: 1px 1px 2px #a1a1a1;
+    transition: 1s;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.ini:hover{
+    background-color: #2d5168;
+    color: #fff;
+    transition: background-color 1s ease;
+    transform: scale(1.2);
+}
+.reg{
+    width: 120px;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px 5px;
+    box-shadow: 1px 1px 2px #a1a1a1;
+    transition: 1s;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+    color: #2d5168;
+}
+.reg:hover{
+    background-color: #2d5168;
+    color: #fff;  
+    transition: background-color .5s ease;
+    transform: scale(1.2) ;
+}
+
+.head2{
+    background-color: #ffffff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    height: 3em;
+    align-items: center;
+    box-shadow: 1px 1px 5px #353535;
+    animation-name: headani;
+    animation-duration: 2s;
+    animation-delay: 1s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+.container {
+    width: 93%;
+    margin: 20px auto;
+    overflow: hidden;
+    padding: 40px;
+    height: auto;
+    background-color: #ffffff;
+    position: relative;
+    box-shadow: 1px 1px 5px #353535;
+    animation-name: aparicion;
+    animation-duration: 2s;
+    animation-delay: 1s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    display: flex;
+
+}
+.minicon{
+    width: 20%;
+    height: 400px;
+    box-shadow: 1px 1px 3px #a1a1a1;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    font-size: 15px;
+    overflow: hidden;
+    margin-right: 20px;
+}
+.minicon2{
+    box-shadow: 1px 1px 3px #a1a1a1;
+    border-radius: 10px;
+    width: 80%;
+    padding: 5px;
+}
+
+@keyframes aparicion{
+    0%{
+        opacity: 0;
+        transform: scale(2);
+    }
+    100%
+    {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+@keyframes headani{
+    0%{
+        opacity: 0;
+        transform: scale(2) ;
+    }
+    100% 
+    {
+        opacity: 1;
+        transform: scale(1);
+    }        
+}
+@keyframes carga {
+  0%{
+    opacity: 1;
+    transform: scale(1);
+    width: max-content;
+    height: max-content;
+    top: 30%;
+    left: 360px;
+  }
+  100%{
+    opacity: 0;
+    width: max-content;
+    height: 1px;
+    left: 360px;
+    top: 30%;
+    padding-top: 1px;
+    font-size: 1px;
+  }
+}*/
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+/*:::::Pie de Pagina*/
+.pie-pagina{
+    width: 100%;
+    background-color: #0a141d;
+}
+.pie-pagina .grupo-1{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap:50px;
+    padding: 45px 0px;
+}
+.pie-pagina .grupo-1 .box figure{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pie-pagina .grupo-1 .box figure img{
+    width: 250px;
+}
+.pie-pagina .grupo-1 .box h2{
+    color: #fff;
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+.pie-pagina .grupo-1 .box p{
+    color: #efefef;
+    margin-bottom: 10px;
+}
+.pie-pagina .grupo-1 .red-social a{
+    display: inline-block;
+    text-decoration: none;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    color: #fff;
+    margin-right: 10px;
+    background-color: #0d2033;
+    text-align: center;
+    transition: all 300ms ease;
+}
+.pie-pagina .grupo-1 .red-social a:hover{
+    color: aqua;
+}
+.pie-pagina .grupo-2{
+    background-color: #0a1a2a;
+    padding: 15px 10px;
+    text-align: center;
+    color: #fff;
+}
+.pie-pagina .grupo-2 small{
+    font-size: 15px;
+}
+@media screen and (max-width:800px){
+    .pie-pagina .grupo-1{
+        width: 90%;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap:30px;
+        padding: 35px 0px;
+    }
+}
+
+
+
+</style>

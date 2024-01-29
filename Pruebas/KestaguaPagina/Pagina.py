@@ -19,17 +19,17 @@ def welcome():
 
 @app.route("/crear-cuenta")
 def ccacount():
-    form =  CrearCuenta()
-    return render_template("crear-cuenta.html", form = form)
-    if form.validate_on_submit():
-        flash(f"¡Cuenta creada para {form.username.data}!", "success")
-        return redirect(url_for("welcome"))
+    #form =  CrearCuenta()
+    return render_template("crear-cuenta.html") #, form = form
+   # if form.validate_on_submit():
+    #    flash(f"¡Cuenta creada para {form.username.data}!", "success")
+     #   return redirect(url_for("welcome"))
      
 
 @app.route("/login")
 def isesion():
-    form =  IniciarSesion()
-    return render_template("login.html", form = form)
+    #form =  IniciarSesion()
+    return render_template("login.html") #, form = form
 
 @app.route("/contact")
 def contact():
