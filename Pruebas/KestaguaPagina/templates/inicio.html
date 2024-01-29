@@ -12,8 +12,8 @@
         Kestagua</div>
       <div class="usua">
         <ul class="lista">
-          <li class="ini"><a href="/login">Iniciar sesión</a></li>
-          <li class="reg"><a href="/crear-cuenta">Registro</a></li>
+          <li><button class="ini" onclick="window.location.href='/login'">Iniciar sesión</button></li>
+          <li><button class="reg" onclick="window.location.href='/crear-cuenta'">Registro</button></li>
         </ul>
       </div>
     </div>
@@ -98,12 +98,17 @@
     font-weight: bold;
     margin-right: 20px;
     box-shadow: 1px 1px 2px #a1a1a1;
+    transition: 1s;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
 }
 
 .ini:hover{
-    background-color: #2fa1ff;
+    background-color: #2d5168;
+    color: #fff;
     transition: background-color 1s ease;
-    transform: scale(1.1);
+    transform: scale(1.2);
 }
 .reg{
     width: 120px;
@@ -111,21 +116,17 @@
     text-align: center;
     padding: 15px 5px;
     box-shadow: 1px 1px 2px #a1a1a1;
-}
-.reg:hover{
-    background-color: #2fa1ff;
-    transition: background-color .5s ease;
-    transform: scale(1.1) ;
-}
-
-li a {
-    text-decoration: none;
+    transition: 1s;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
     color: #2d5168;
 }
-li a:hover {
-    transition: color .6s ease;
-    color: #fff;
-    
+.reg:hover{
+    background-color: #2d5168;
+    color: #fff;  
+    transition: background-color .5s ease;
+    transform: scale(1.2) ;
 }
 
 .head2{
