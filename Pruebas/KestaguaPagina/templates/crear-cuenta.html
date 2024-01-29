@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css">
   <title>Formulario Registro</title>
   <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+  <link rel="shortcut icon" href="Logo2.jpg" type="image/x-icon">
 </head>
 <body>
   <div class="head2">
@@ -19,10 +20,10 @@
     </div>
   </div>
   
- 
+
 
 <form action="">
- 
+
   <section class="form-register">
 
     <button class="flecha" onclick="window.location.href='/'"><ion-icon name="return-left"></ion-icon></button> 
@@ -175,12 +176,27 @@
   font-family: 'calibri';
   color: #2d5168;
   box-shadow: 1px 2px 10px #353535;
-  /*animation-name: formani;
-  animation-duration: 1s;
-  animation-delay: 1s;
+  animation-name: formani;
+  animation-duration: 4s;
+  animation-delay: 1;
   opacity: 0;
-  animation-fill-mode: forwards;*/
+  animation-fill-mode: forwards;
   padding-top: 0px;
+}
+.head2{
+    background-color: #ffffff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    height: 3em;
+    align-items: center;
+    box-shadow: 1px 1px 5px #353535;
+    animation-name: headani;
+    animation-duration: 4s;
+    animation-delay: 1;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    font-family: Arial, sans-serif;
 }
 .form-register h4 {
   font-size: 22px;
@@ -232,21 +248,7 @@ body {
   background-color: #d3ebff;
 }
 
-.head2{
-    background-color: #ffffff;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    height: 3em;
-    align-items: center;
-    box-shadow: 1px 1px 5px #353535;
-    /*animation-name: headani;
-    animation-duration: 1s;
-    animation-delay: .5s;
-    opacity: 0;
-    animation-fill-mode: forwards;*/
-    font-family: Arial, sans-serif;
-}
+
 .titulo1{
     color: #2d5168; 
     top: 50%;
@@ -301,7 +303,6 @@ body {
 }
 
 
-/*
 @keyframes headani{
     0%{
         opacity: 0;
@@ -324,5 +325,4 @@ body {
         transform: scale(1);
     }        
 }
-*/
 </style>
